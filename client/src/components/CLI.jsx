@@ -12,30 +12,10 @@ const CLI = ({ toggleMode }) => {
   const inputRef = useRef(null);
 
   const themes = {
-    green: {
-      primary: 'text-green-400',
-      secondary: 'text-green-300',
-      accent: 'text-green-500',
-      bg: 'bg-black'
-    },
-    blue: {
-      primary: 'text-blue-400',
-      secondary: 'text-blue-300',
-      accent: 'text-blue-500',
-      bg: 'bg-gray-900'
-    },
-    purple: {
-      primary: 'text-purple-400',
-      secondary: 'text-purple-300',
-      accent: 'text-purple-500',
-      bg: 'bg-gray-900'
-    },
-    matrix: {
-      primary: 'text-green-400',
-      secondary: 'text-green-300',
-      accent: 'text-green-500',
-      bg: 'bg-black'
-    }
+    green: { primary: 'text-green-400', secondary: 'text-green-300', accent: 'text-green-500', bg: 'bg-black' },
+    blue: { primary: 'text-blue-400', secondary: 'text-blue-300', accent: 'text-blue-500', bg: 'bg-gray-900' },
+    purple: { primary: 'text-purple-400', secondary: 'text-purple-300', accent: 'text-purple-500', bg: 'bg-gray-900' },
+    matrix: { primary: 'text-green-400', secondary: 'text-green-300', accent: 'text-green-500', bg: 'bg-black' }
   };
 
   /* ===================== PROJECTS (8) ===================== */
@@ -91,10 +71,11 @@ const CLI = ({ toggleMode }) => {
     },
     {
       id: 8,
-      title: 'Academic / Hackathon Project',
-      description: 'Problem-solving project built during college or hackathons.',
-      techStack: ['Web Tech', 'Problem Solving'],
-      githubLink: 'https://github.com/Vignesh-1221'
+      title: 'CSE Interview Quiz',
+      description:
+        'Web-based quiz application for Computer Science interview preparation, developed during an AICTE–Edunet Foundation internship.',
+      techStack: ['HTML', 'CSS', 'JavaScript'],
+      githubLink: 'https://github.com/Vignesh-1221/cse_interview-quiz'
     }
   ];
 
@@ -112,37 +93,26 @@ const CLI = ({ toggleMode }) => {
     name: 'Sai Vignesh Kalivarapu',
     title: 'AI / ML Engineer | MERN Developer',
     education: 'Final Year Engineering Student',
-    cgpa: '—',
     email: 'ksaivignesh12@gmail.com',
     github: 'https://github.com/Vignesh-1221',
-    linkedin: 'https://www.linkedin.com/in/kalivarapu-sai-vignesh-a7648b25a/',
-    achievements: [
-      'Built healthcare-focused ML and MERN platforms',
-      'Worked on IoT + predictive systems using LSTM'
-    ]
+    linkedin: 'https://www.linkedin.com/in/kalivarapu-sai-vignesh-a7648b25a/'
   };
 
-  /* ===================== COMMAND DEFINITIONS ===================== */
   const commands = {
-    help: { description: 'Show available commands', usage: 'help [command]' },
-    about: { description: 'Display personal information', usage: 'about' },
-    skills: { description: 'List technical skills', usage: 'skills [category]' },
-    projects: { description: 'Show project portfolio', usage: 'projects [id]' },
-    contact: { description: 'Display contact information', usage: 'contact' },
-    resume: { description: 'Download resume', usage: 'resume' },
-    clear: { description: 'Clear terminal screen', usage: 'clear' },
-    whoami: { description: 'Display current user info', usage: 'whoami' },
-    achievements: { description: 'Display achievements', usage: 'achievements' },
-    social: { description: 'Open social media links', usage: 'social [github|linkedin|email]' },
-    theme: { description: 'Change terminal theme', usage: 'theme [green|blue|purple|matrix]' },
-    gui: { description: 'Switch to GUI mode', usage: 'gui' },
-    exit: { description: 'Exit CLI mode', usage: 'exit' }
+    help: { description: 'Show available commands' },
+    about: { description: 'Display personal information' },
+    skills: { description: 'List technical skills' },
+    projects: { description: 'Show project portfolio' },
+    contact: { description: 'Display contact information' },
+    clear: { description: 'Clear terminal screen' },
+    gui: { description: 'Switch to GUI mode' },
+    exit: { description: 'Exit CLI mode' }
   };
 
   useEffect(() => {
     setOutput([
       { type: 'system', content: '╔══════════════════════════════════════════════════════════════╗' },
-      { type: 'system', content: '║                Welcome to Vignesh\'s Portfolio CLI           ║' },
+      { type: 'system', content: '║              Welcome to Vignesh\'s Portfolio CLI             ║' },
       { type: 'system', content: '║  Type "help" to see available commands                      ║' },
       { type: 'system', content: '║  Type "gui" or "exit" to return to GUI mode                ║' },
       { type: 'system', content: '╚══════════════════════════════════════════════════════════════╝' },
@@ -151,83 +121,55 @@ const CLI = ({ toggleMode }) => {
   }, []);
 
   useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
-    }
+    terminalRef.current?.scrollTo(0, terminalRef.current.scrollHeight);
   }, [output]);
 
   const executeCommand = (cmd) => {
-    const [command, ...args] = cmd.trim().toLowerCase().split(' ');
-
-    if (cmd.trim()) {
-      setCommandHistory(prev => [...prev, cmd.trim()]);
-      setHistoryIndex(-1);
-    }
-
+    const command = cmd.trim().toLowerCase();
     setOutput(prev => [...prev, { type: 'command', content: `${currentPath}$ ${cmd}` }]);
 
-    switch (command) {
-      case 'help':
-        setOutput(prev => [
-          ...prev,
-          ...Object.entries(commands).map(
-            ([c, i]) => ({ type: 'output', content: `${c.padEnd(12)} - ${i.description}` })
-          )
-        ]);
-        break;
-
-      case 'about':
-        setOutput(prev => [
-          ...prev,
-          { type: 'output', content: `Name: ${personalInfo.name}` },
-          { type: 'output', content: `Title: ${personalInfo.title}` },
-          { type: 'output', content: `Education: ${personalInfo.education}` }
-        ]);
-        break;
-
-      case 'projects':
-        setOutput(prev => [
-          ...prev,
-          ...projects.flatMap(p => [
-            { type: 'output', content: `${p.id}. ${p.title}` },
-            { type: 'output', content: `   ${p.description}` },
-            { type: 'output', content: `   Tech: ${p.techStack.join(', ')}` },
-            { type: 'output', content: `   GitHub: ${p.githubLink}` },
-            { type: 'output', content: '' }
-          ])
-        ]);
-        break;
-
-      case 'contact':
-        setOutput(prev => [
-          ...prev,
-          { type: 'output', content: `Email: ${personalInfo.email}` },
-          { type: 'output', content: `GitHub: ${personalInfo.github}` },
-          { type: 'output', content: `LinkedIn: ${personalInfo.linkedin}` }
-        ]);
-        break;
-
-      case 'clear':
-        setOutput([]);
-        break;
-
-      case 'gui':
-      case 'exit':
-        toggleMode();
-        break;
-
-      default:
-        setOutput(prev => [...prev, { type: 'error', content: `Command '${command}' not found` }]);
+    if (command === 'projects') {
+      setOutput(prev => [
+        ...prev,
+        ...projects.flatMap(p => [
+          { type: 'output', content: `${p.id}. ${p.title}` },
+          { type: 'output', content: `   ${p.description}` },
+          { type: 'output', content: `   Tech: ${p.techStack.join(', ')}` },
+          { type: 'output', content: `   GitHub: ${p.githubLink}` },
+          { type: 'output', content: '' }
+        ])
+      ]);
+      return;
     }
+
+    if (command === 'contact') {
+      setOutput(prev => [
+        ...prev,
+        { type: 'output', content: `Email: ${personalInfo.email}` },
+        { type: 'output', content: `GitHub: ${personalInfo.github}` },
+        { type: 'output', content: `LinkedIn: ${personalInfo.linkedin}` }
+      ]);
+      return;
+    }
+
+    if (command === 'clear') {
+      setOutput([]);
+      return;
+    }
+
+    if (command === 'gui' || command === 'exit') {
+      toggleMode();
+      return;
+    }
+
+    setOutput(prev => [...prev, { type: 'error', content: `Command '${command}' not found` }]);
   };
 
   return (
     <div className={`h-screen ${themes[theme].bg} ${themes[theme].primary} font-mono`}>
       <div className="p-4" ref={terminalRef}>
         {output.map((line, i) => (
-          <div key={i} className="whitespace-pre-wrap">
-            {line.content}
-          </div>
+          <div key={i} className="whitespace-pre-wrap">{line.content}</div>
         ))}
         <div className="flex">
           <span>{currentPath}$</span>

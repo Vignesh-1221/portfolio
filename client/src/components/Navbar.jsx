@@ -11,8 +11,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50;
-      setScrolled(isScrolled);
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -54,7 +53,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
               duration={500}
               className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent cursor-pointer"
             >
-              SVK
+              KSV
             </Link>
           </motion.div>
 
@@ -75,7 +74,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
                     duration={500}
                     offset={-60}
                     activeClass="nav-active"
-                    className="nav-link relative px-3 py-2 text-sm font-medium text-gray-300 hover:text-white transition-all duration-300 cursor-pointer group"
+                    className="nav-link relative px-3 py-2 text-base font-medium text-gray-300 hover:text-white transition-all duration-300 cursor-pointer group"
                   >
                     {item.charAt(0).toUpperCase() + item.slice(1)}
                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
@@ -142,7 +141,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
                   duration={500}
                   offset={-60}
                   onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700 rounded-md cursor-pointer"
+                  className="block px-3 py-2 text-lg font-medium text-gray-300 hover:text-white hover:bg-gray-700 rounded-md cursor-pointer"
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </Link>
