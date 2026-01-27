@@ -160,13 +160,11 @@ On first run, the API returns mock data if the database is empty. You can popula
 - Node.js
 - Express.js
 - MongoDB
-- Mongoose
-- CORS
-- dotenv
+
 
 ## 📝 Notes
 
-- **UI Consistency**: The UI remains 100% identical to the original React-only version. No styling or layout changes were made during the MERN conversion.
+- **UI Consistency**: The UI remains simple.
 - **Data Flow**: Frontend components fetch data from the backend API instead of using hardcoded data.
 - **Image Handling**: Images are still served from the frontend assets, but paths are mapped from API responses.
 - **Error Handling**: The frontend gracefully handles API errors and falls back to empty states.
