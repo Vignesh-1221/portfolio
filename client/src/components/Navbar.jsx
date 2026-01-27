@@ -31,8 +31,8 @@ const Navbar = ({ isCliMode, toggleMode }) => {
     <motion.nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-white/10'
-          : 'bg-transparent'
+          ? 'bg-[#020617]/95 backdrop-blur-md shadow-lg border-b border-[#14B8A6]/15'
+          : 'bg-[#020617]/80'
       }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -51,7 +51,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
               to="home"
               smooth={true}
               duration={500}
-              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent cursor-pointer"
+              className="text-2xl font-bold bg-gradient-to-r from-[#E5E7EB] to-[#14B8A6] bg-clip-text text-transparent cursor-pointer"
             >
               KSV
             </Link>
@@ -74,10 +74,10 @@ const Navbar = ({ isCliMode, toggleMode }) => {
                     duration={500}
                     offset={-60}
                     activeClass="nav-active"
-                    className="nav-link relative px-3 py-2 text-base font-medium text-gray-300 hover:text-white transition-all duration-300 cursor-pointer group"
+                    className="nav-link relative px-3 py-2 text-base font-medium text-[#94A3B8] hover:text-[#E5E7EB] transition-all duration-300 cursor-pointer group"
                   >
                     {item.charAt(0).toUpperCase() + item.slice(1)}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#14B8A6] to-[#5EEAD4] group-hover:w-full transition-all duration-300"></span>
                   </Link>
                 </motion.div>
               ))}
@@ -90,7 +90,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
               onClick={handleDownload}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 shadow-lg"
+              className="bg-[#14B8A6] hover:bg-[#5EEAD4] text-[#020617] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 shadow-lg"
             >
               <Download className="w-4 h-4" />
               Resume
@@ -100,7 +100,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
               onClick={toggleMode}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 shadow-lg"
+              className="bg-[#111827] hover:bg-[#020617] text-[#E5E7EB] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 shadow-lg"
               title={isCliMode ? "Switch to GUI Mode" : "Switch to CLI Mode"}
             >
               {isCliMode ? <Monitor className="w-4 h-4" /> : <Terminal className="w-4 h-4" />}
@@ -113,7 +113,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
             <motion.button
               onClick={() => setIsOpen(!isOpen)}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700"
+              className="inline-flex items-center justify-center p-2 rounded-md text-[#94A3B8] hover:text-[#E5E7EB] hover:bg-[#111827]"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </motion.button>
@@ -131,7 +131,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-gray-900/95 backdrop-blur-md border-t border-white/10">
+            <div className="px-2 pt-2 pb-3 space-y-1 bg-[#020617]/95 backdrop-blur-md border-t border-[#14B8A6]/15">
               {navItems.map((item) => (
                 <Link
                   key={item}
@@ -141,7 +141,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
                   duration={500}
                   offset={-60}
                   onClick={() => setIsOpen(false)}
-                  className="block px-3 py-2 text-lg font-medium text-gray-300 hover:text-white hover:bg-gray-700 rounded-md cursor-pointer"
+                  className="block px-3 py-2 text-lg font-medium text-[#94A3B8] hover:text-[#E5E7EB] hover:bg-[#111827] rounded-md cursor-pointer"
                 >
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </Link>

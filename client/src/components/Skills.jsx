@@ -467,7 +467,7 @@ const staticCategories = [
   {
     title: "Languages",
     icon: "💻",
-    color: "bg-blue-600",
+    color: "bg-[#14B8A6]/20",
     skills: [
       { icon: pythonIcon, name: "Python" },
       { icon: javaIcon, name: "Java" },
@@ -477,7 +477,7 @@ const staticCategories = [
   {
     title: "Web Dev",
     icon: "🌐",
-    color: "bg-green-600",
+    color: "bg-[#14B8A6]/20",
     skills: [
       { icon: reactIcon, name: "React" },
       { icon: nodeIcon, name: "Node.js" },
@@ -490,7 +490,7 @@ const staticCategories = [
   {
     title: "Databases",
     icon: "🗄️",
-    color: "bg-purple-600",
+    color: "bg-[#14B8A6]/20",
     skills: [
       { icon: postgresIcon, name: "PostgreSQL" },
       { icon: mongoseIcon, name: "MongoDB" }
@@ -499,7 +499,7 @@ const staticCategories = [
   {
     title: "ML/AI",
     icon: "🤖",
-    color: "bg-red-600",
+    color: "bg-[#14B8A6]/20",
     skills: [
       { icon: pythonIcon, name: "Python" },
       { icon: numpyIcon, name: "NumPy" },
@@ -511,7 +511,7 @@ const staticCategories = [
   {
     title: "Tools",
     icon: "🛠️",
-    color: "bg-orange-600",
+    color: "bg-[#14B8A6]/20",
     skills: [
       { icon: gitIcon, name: "Git" },
       { icon: postmanIcon, name: "Postman" }
@@ -520,19 +520,19 @@ const staticCategories = [
 ];
 
 const SkillCard = ({ icon, name }) => (
-  <div className="hover:scale-105 transition duration-200 p-3 bg-gray-700 rounded-lg shadow-sm flex flex-col items-center">
+  <div className="hover:scale-105 transition duration-200 p-3 bg-[#020617] rounded-lg shadow-sm flex flex-col items-center">
     <img src={icon} alt={name} className="h-8 w-8 mb-2" />
-    <p className="text-white text-sm font-medium text-center">{name}</p>
+    <p className="text-[#E5E7EB] text-sm font-medium text-center">{name}</p>
   </div>
 );
 
 const CategoryCard = ({ title, skills, icon, color }) => (
-  <div className="bg-gray-800 rounded-2xl p-6 shadow-lg border border-gray-700 hover:border-gray-600 transition duration-300">
+  <div className="bg-[#020617] rounded-2xl p-6 shadow-lg border border-[#14B8A6]/15 hover:border-[#14B8A6]/40 transition duration-300">
     <div className="flex items-center mb-4">
       <div className={`p-2 rounded-lg ${color} mr-3`}>
         <span className="text-xl">{icon}</span>
       </div>
-      <h3 className="text-xl font-bold text-white">{title}</h3>
+      <h3 className="text-xl font-bold text-[#E5E7EB]">{title}</h3>
     </div>
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {skills.map((skill, index) => (
@@ -609,11 +609,11 @@ const Skills = () => {
   const tabNames = ["All Skills", "Languages", "Web Dev", "Databases", "ML/AI", "Tools"];
 
   return (
-    <section id="skills" className="bg-gray-900 py-12 px-6 md:px-20">
-      <h1 className="text-3xl md:text-4xl font-bold text-center text-purple-400 mb-6">
+    <section id="skills" className="bg-[#0F172A] py-12 px-6 md:px-20">
+      <h1 className="text-3xl md:text-4xl font-bold text-center text-[#14B8A6] mb-6">
         Technical Expertise
       </h1>
-      <p className="text-center text-gray-400 mb-10">
+      <p className="text-center text-[#94A3B8] mb-10">
         Comprehensive skill set spanning multiple technologies and domains
       </p>
 
@@ -624,8 +624,8 @@ const Skills = () => {
             key={tab}
             className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
               activeTab === tab
-                ? "bg-purple-600 text-white shadow-md"
-                : "bg-gray-700 text-gray-300 hover:bg-gray-600"
+                ? "bg-[#14B8A6] text-[#020617] shadow-md"
+                : "bg-[#020617] text-[#E5E7EB] hover:bg-[#111827]"
             }`}
             onClick={() => setActiveTab(tab)}
           >

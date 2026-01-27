@@ -110,20 +110,24 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects" className="min-h-screen px-6 py-12 bg-gray-950 text-white">
+    <section id="projects" className="min-h-screen px-6 py-16 bg-[#0F172A] text-[#E5E7EB]">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-blue-400 mb-8">My Projects</h2>
+        <h2 className="text-4xl font-bold text-[#14B8A6] mb-8">My Projects</h2>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="group/projects grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <ProjectCard
+            <div
               key={index}
-              title={project.title}
-              image={project.image}
-              description={project.description}
-              techStack={project.techStack}
-              projectLink={project.projectLink}
-            />
+              className="transition-opacity duration-300 group-hover/projects:opacity-60 hover:opacity-100"
+            >
+              <ProjectCard
+                title={project.title}
+                image={project.image}
+                description={project.description}
+                techStack={project.techStack}
+                projectLink={project.projectLink}
+              />
+            </div>
           ))}
         </div>
       </div>
