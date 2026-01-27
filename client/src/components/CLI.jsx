@@ -128,6 +128,21 @@ const CLI = ({ toggleMode }) => {
     const command = cmd.trim().toLowerCase();
     setOutput(prev => [...prev, { type: 'command', content: `${currentPath}$ ${cmd}` }]);
 
+    /* ✅ HELP COMMAND FIX */
+    if (command === 'help') {
+      setOutput(prev => [
+        ...prev,
+        { type: 'output', content: 'Available commands:' },
+        ...Object.entries(commands).map(
+          ([cmd, info]) => ({
+            type: 'output',
+            content: `${cmd.padEnd(10)} - ${info.description}`
+          })
+        )
+      ]);
+      return;
+    }
+
     if (command === 'projects') {
       setOutput(prev => [
         ...prev,
