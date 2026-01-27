@@ -20,7 +20,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = 'src/assets/Vignesh_resume.pdf';
+    link.href = '/Vignesh_resume.pdf';
     link.download = 'Vignesh_Resume.pdf';
     document.body.appendChild(link);
     link.click();

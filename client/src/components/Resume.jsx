@@ -5,7 +5,7 @@ import { Download, Eye, FileText, Award, GraduationCap, Briefcase } from 'lucide
 const Resume = () => {
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = 'src/assets/Vignesh_Resume.pdf';
+    link.href = '/Vignesh_Resume.pdf';
     link.download = 'Vignesh_Resume.pdf';
     document.body.appendChild(link);
     link.click();
@@ -13,7 +13,7 @@ const Resume = () => {
   };
 
   const handleView = () => {
-    window.open('src/assets/Vignesh_Resume.pdf', '_blank');
+    window.open('/Vignesh_Resume.pdf', '_blank');
   };
 
   const resumeHighlights = [

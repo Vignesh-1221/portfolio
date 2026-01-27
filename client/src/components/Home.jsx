@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaCode } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaCode, FaPhoneAlt } from 'react-icons/fa';
 import myImage from "../assets/images/image.png"; 
 
 const Home = () => {
@@ -110,7 +110,7 @@ const Home = () => {
           <button 
             onClick={() => {
               const link = document.createElement('a');
-              link.href = 'src/assets/Vignesh_Resume.pdf';
+              link.href = '/Vignesh_Resume.pdf';
               link.download = 'Vignesh_Resume.pdf';
               document.body.appendChild(link);
               link.click();
@@ -128,7 +128,8 @@ const Home = () => {
           {[
             { icon: FaGithub, href: "https://github.com/Vignesh-1221", color: "hover:text-gray-300", label: "GitHub" },
             { icon: FaLinkedin, href: "https://www.linkedin.com/in/kalivarapu-sai-vignesh-a7648b25a/", color: "hover:text-blue-400", label: "LinkedIn" },
-            { icon: FaEnvelope, href: "mailto:ksaivignesh12@gmail.com", color: "hover:text-red-400", label: "Email" }
+            { icon: FaEnvelope, href: "mailto:ksaivignesh12@gmail.com", color: "hover:text-red-400", label: "Email" },
+            { icon: FaPhoneAlt, href: "tel:9100680121", color: "hover:text-green-400", label: "Contact" }
           ].map(({ icon: Icon, href, color, label }, index) => (
             <a
               key={index}
