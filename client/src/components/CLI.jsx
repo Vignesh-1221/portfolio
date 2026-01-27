@@ -1,24 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaGithub, FaLinkedin, FaEnvelope, FaDownload, FaTerminal } from 'react-icons/fa';
 
 const CLI = ({ toggleMode }) => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([]);
-  const [commandHistory, setCommandHistory] = useState([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
-  const [currentPath, setCurrentPath] = useState('~');
-  const [theme, setTheme] = useState('green');
+  const [currentPath] = useState('~');
   const terminalRef = useRef(null);
-  const inputRef = useRef(null);
 
-  const themes = {
-    green: { primary: 'text-green-400', secondary: 'text-green-300', accent: 'text-green-500', bg: 'bg-black' },
-    blue: { primary: 'text-blue-400', secondary: 'text-blue-300', accent: 'text-blue-500', bg: 'bg-gray-900' },
-    purple: { primary: 'text-purple-400', secondary: 'text-purple-300', accent: 'text-purple-500', bg: 'bg-gray-900' },
-    matrix: { primary: 'text-green-400', secondary: 'text-green-300', accent: 'text-green-500', bg: 'bg-black' }
-  };
-
-  /* ===================== PROJECTS (8) ===================== */
+  /* ===================== PROJECTS ===================== */
   const projects = [
     {
       id: 1,
@@ -73,7 +61,7 @@ const CLI = ({ toggleMode }) => {
       id: 8,
       title: 'CSE Interview Quiz',
       description:
-        'Web-based quiz application for Computer Science interview preparation, developed during an AICTE–Edunet Foundation internship.',
+        'Web-based quiz application for CS interview preparation (AICTE–Edunet Internship).',
       techStack: ['HTML', 'CSS', 'JavaScript'],
       githubLink: 'https://github.com/Vignesh-1221/cse_interview-quiz'
     }
@@ -94,25 +82,26 @@ const CLI = ({ toggleMode }) => {
     title: 'AI / ML Engineer | MERN Developer',
     education: 'Final Year Engineering Student',
     email: 'ksaivignesh12@gmail.com',
+    phone: '9100680121',
     github: 'https://github.com/Vignesh-1221',
     linkedin: 'https://www.linkedin.com/in/kalivarapu-sai-vignesh-a7648b25a/'
   };
 
   const commands = {
-    help: { description: 'Show available commands' },
-    about: { description: 'Display personal information' },
-    skills: { description: 'List technical skills' },
-    projects: { description: 'Show project portfolio' },
-    contact: { description: 'Display contact information' },
-    clear: { description: 'Clear terminal screen' },
-    gui: { description: 'Switch to GUI mode' },
-    exit: { description: 'Exit CLI mode' }
+    help: 'Show available commands',
+    about: 'Display personal information',
+    skills: 'List technical skills',
+    projects: 'Show project portfolio',
+    contact: 'Display contact information',
+    clear: 'Clear terminal screen',
+    gui: 'Switch to GUI mode',
+    exit: 'Exit CLI mode'
   };
 
   useEffect(() => {
     setOutput([
       { type: 'system', content: '╔══════════════════════════════════════════════════════════════╗' },
-      { type: 'system', content: '║              Welcome to Vignesh\'s Portfolio CLI             ║' },
+      { type: 'system', content: '║        Welcome to Vignesh\'s Portfolio CLI                   ║' },
       { type: 'system', content: '║  Type "help" to see available commands                      ║' },
       { type: 'system', content: '║  Type "gui" or "exit" to return to GUI mode                ║' },
       { type: 'system', content: '╚══════════════════════════════════════════════════════════════╝' },
@@ -128,17 +117,37 @@ const CLI = ({ toggleMode }) => {
     const command = cmd.trim().toLowerCase();
     setOutput(prev => [...prev, { type: 'command', content: `${currentPath}$ ${cmd}` }]);
 
-    /* ✅ HELP COMMAND FIX */
     if (command === 'help') {
       setOutput(prev => [
         ...prev,
         { type: 'output', content: 'Available commands:' },
         ...Object.entries(commands).map(
-          ([cmd, info]) => ({
-            type: 'output',
-            content: `${cmd.padEnd(10)} - ${info.description}`
-          })
+          ([cmd, desc]) => ({ type: 'output', content: `${cmd.padEnd(10)} - ${desc}` })
         )
+      ]);
+      return;
+    }
+
+    if (command === 'about') {
+      setOutput(prev => [
+        ...prev,
+        { type: 'output', content: `Name      : ${personalInfo.name}` },
+        { type: 'output', content: `Title     : ${personalInfo.title}` },
+        { type: 'output', content: `Education : ${personalInfo.education}` },
+        { type: 'output', content: `Email     : ${personalInfo.email}` },
+        { type: 'output', content: `Mobile    : ${personalInfo.phone}` }
+      ]);
+      return;
+    }
+
+    if (command === 'skills') {
+      setOutput(prev => [
+        ...prev,
+        ...Object.entries(skills).flatMap(([category, items]) => [
+          { type: 'output', content: `${category}:` },
+          { type: 'output', content: `  ${items.join(', ')}` },
+          { type: 'output', content: '' }
+        ])
       ]);
       return;
     }
@@ -160,8 +169,9 @@ const CLI = ({ toggleMode }) => {
     if (command === 'contact') {
       setOutput(prev => [
         ...prev,
-        { type: 'output', content: `Email: ${personalInfo.email}` },
-        { type: 'output', content: `GitHub: ${personalInfo.github}` },
+        { type: 'output', content: `Email   : ${personalInfo.email}` },
+        { type: 'output', content: `Mobile  : ${personalInfo.phone}` },
+        { type: 'output', content: `GitHub  : ${personalInfo.github}` },
         { type: 'output', content: `LinkedIn: ${personalInfo.linkedin}` }
       ]);
       return;
@@ -181,7 +191,7 @@ const CLI = ({ toggleMode }) => {
   };
 
   return (
-    <div className={`h-screen ${themes[theme].bg} ${themes[theme].primary} font-mono`}>
+    <div className="h-screen bg-black text-green-400 font-mono">
       <div className="p-4" ref={terminalRef}>
         {output.map((line, i) => (
           <div key={i} className="whitespace-pre-wrap">{line.content}</div>
@@ -189,7 +199,6 @@ const CLI = ({ toggleMode }) => {
         <div className="flex">
           <span>{currentPath}$</span>
           <input
-            ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && (executeCommand(input), setInput(''))}
