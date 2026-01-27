@@ -20,7 +20,7 @@ const experiences = [
   {
     role: "Front End Web Development Intern",
     company: "Edunet Foundation (AICTE)",
-    duration: "6-Week Internship",
+    duration: "August 2025 - September 2025",
     projectTitle: "Project: CSE Interview Quiz Web Application",
     description:
       "Developed a web-based quiz application focused on Computer Science interview preparation as part of an AICTE–Edunet Foundation internship.",
