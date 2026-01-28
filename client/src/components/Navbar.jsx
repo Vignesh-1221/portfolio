@@ -10,10 +10,7 @@ const Navbar = ({ isCliMode, toggleMode }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -29,117 +26,98 @@ const Navbar = ({ isCliMode, toggleMode }) => {
 
   return (
     <motion.nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#020617]/95 backdrop-blur-md shadow-lg border-b border-[#14B8A6]/15'
-          : 'bg-[#020617]/80'
-      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
+      className={`navbar fixed top-0 inset-x-0 z-50 ${
+        scrolled ? 'shadow-lg border-[#14B8A6]/15' : 'border-transparent'
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      {/* Blur background (visual only, no layout impact) */}
+      <div className="navbar-bg" aria-hidden />
+
+      {/* Fixed-height content wrapper */}
+      <div className="navbar-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="navbar-row flex items-center justify-between">
 
           {/* Logo */}
-          <motion.div
-            className="flex-shrink-0"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <Link
+            to="home"
+            smooth
+            duration={500}
+            className="text-2xl font-bold bg-gradient-to-r from-[#E5E7EB] to-[#14B8A6] bg-clip-text text-transparent cursor-pointer whitespace-nowrap leading-none"
           >
-            <Link
-              to="home"
-              smooth={true}
-              duration={500}
-              className="text-2xl font-bold bg-gradient-to-r from-[#E5E7EB] to-[#14B8A6] bg-clip-text text-transparent cursor-pointer"
-            >
-              KSV
-            </Link>
-          </motion.div>
+            KSV
+          </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item, index) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Link
-                    to={item}
-                    spy={true}
-                    smooth={true}
-                    duration={500}
-                    offset={-60}
-                    activeClass="nav-active"
-                    className="nav-link relative px-3 py-2 text-base font-medium text-[#94A3B8] hover:text-[#E5E7EB] transition-all duration-300 cursor-pointer group"
-                  >
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#14B8A6] to-[#5EEAD4] group-hover:w-full transition-all duration-300"></span>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item}
+                to={item}
+                smooth
+                duration={500}
+                offset={-64}
+                spy
+                activeClass="nav-active"
+                className="nav-link relative text-base font-medium text-[#94A3B8] hover:text-[#E5E7EB] cursor-pointer whitespace-nowrap leading-none"
+              >
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+                <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-gradient-to-r from-[#14B8A6] to-[#5EEAD4] transition-all duration-300 group-hover:w-full" />
+              </Link>
+            ))}
           </div>
 
-          {/* Right-side buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <motion.button
+          {/* Right Buttons */}
+          <div className="hidden md:flex items-center gap-4">
+            <button
               onClick={handleDownload}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#14B8A6] hover:bg-[#5EEAD4] text-[#020617] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 shadow-lg"
+              className="bg-[#14B8A6] hover:bg-[#5EEAD4] text-[#020617] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg leading-none"
             >
               <Download className="w-4 h-4" />
               Resume
-            </motion.button>
+            </button>
 
-            <motion.button
+            <button
               onClick={toggleMode}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#111827] hover:bg-[#020617] text-[#E5E7EB] px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 flex items-center gap-2 shadow-lg"
-              title={isCliMode ? "Switch to GUI Mode" : "Switch to CLI Mode"}
+              className="bg-[#111827] hover:bg-[#020617] text-[#E5E7EB] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg leading-none"
+              title={isCliMode ? 'Switch to GUI Mode' : 'Switch to CLI Mode'}
             >
               {isCliMode ? <Monitor className="w-4 h-4" /> : <Terminal className="w-4 h-4" />}
               {isCliMode ? 'GUI' : 'CLI'}
-            </motion.button>
+            </button>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <motion.button
-              onClick={() => setIsOpen(!isOpen)}
-              whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center justify-center p-2 rounded-md text-[#94A3B8] hover:text-[#E5E7EB] hover:bg-[#111827]"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </motion.button>
-          </div>
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-md text-[#94A3B8] hover:text-[#E5E7EB] hover:bg-[#111827]"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X /> : <Menu />}
+          </button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="md:hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
+            className="md:hidden absolute top-full inset-x-0 bg-[#020617]/95 backdrop-blur-lg border-t border-[#14B8A6]/15"
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-[#020617]/95 backdrop-blur-md border-t border-[#14B8A6]/15">
+            <div className="px-4 py-3 space-y-2">
               {navItems.map((item) => (
                 <Link
                   key={item}
                   to={item}
-                  spy={true}
-                  smooth={true}
+                  smooth
                   duration={500}
-                  offset={-60}
+                  offset={-64}
                   onClick={() => setIsOpen(false)}
                   className="block px-3 py-2 text-lg font-medium text-[#94A3B8] hover:text-[#E5E7EB] hover:bg-[#111827] rounded-md cursor-pointer"
                 >
@@ -151,12 +129,38 @@ const Navbar = ({ isCliMode, toggleMode }) => {
         )}
       </AnimatePresence>
 
+      {/* Component styles */}
       <style jsx>{`
-        .nav-active {
-          color: white !important;
+        .navbar {
+          --nav-h: 64px;
+          --sat: env(safe-area-inset-top, 0px);
+          height: var(--nav-h);
+          border-bottom-width: 1px;
+          box-sizing: border-box;
         }
-        .nav-active span {
-          width: 100% !important;
+
+        .navbar-bg {
+          position: absolute;
+          inset: 0;
+          background: rgba(2, 6, 23, 0.8);
+          backdrop-filter: blur(12px);
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .navbar-inner {
+          position: relative;
+          z-index: 1;
+          height: 100%;
+          padding-top: var(--sat);
+        }
+
+        .navbar-row {
+          height: calc(var(--nav-h) - var(--sat));
+        }
+
+        .nav-active {
+          color: #ffffff !important;
         }
       `}</style>
     </motion.nav>
