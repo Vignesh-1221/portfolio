@@ -6,6 +6,7 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import CLI from './components/CLI';
 import Experience from './components/Experience';
+import AchevementCard from './components/AchievementCard';
 
 function App() {
   const [isCliMode, setIsCliMode] = useState(false);

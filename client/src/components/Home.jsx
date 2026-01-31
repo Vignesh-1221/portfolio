@@ -63,6 +63,7 @@ const Home = () => {
 
       {/* Main Content */}
       <div className="relative z-10 text-center px-4 max-w-4xl">
+
         {/* Profile Image */}
         <div className="relative mb-8 group">
           <div className="absolute inset-0 bg-gradient-to-r from-[#E5E7EB] via-[#14B8A6] to-[#5EEAD4] rounded-full blur-lg opacity-70 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
@@ -73,11 +74,12 @@ const Home = () => {
           />
         </div>
 
-        {/* Greeting */}
+        {/* Heading */}
         <div className="mb-6">
           <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-[#E5E7EB] via-[#14B8A6] to-[#E5E7EB] bg-clip-text text-transparent">
             Kalivarapu Sai Vignesh
           </h1>
+
           <div className="h-16 flex items-center justify-center">
             <h2 className="text-2xl md:text-3xl font-light text-[#E5E7EB] flex items-center">
               {displayText}
@@ -119,12 +121,27 @@ const Home = () => {
           </button>
         </div>
 
-        {/* Socials */}
-        <div className="flex justify-center space-x-8">
-          <a href="https://github.com/Vignesh-1221" target="_blank" rel="noopener noreferrer"><FaGithub /></a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><FaLinkedin /></a>
-          <a href="mailto:ksaivignesh12@gmail.com"><FaEnvelope /></a>
-          <a href="tel:9100680121"><FaPhoneAlt /></a>
+        {/* Social Icons — FIXED */}
+        <div className="flex justify-center space-x-8 text-[#94A3B8]">
+          <a href="https://github.com/Vignesh-1221" target="_blank" rel="noopener noreferrer"
+            className="text-3xl hover:text-[#14B8A6] transition-all transform hover:scale-125">
+            <FaGithub />
+          </a>
+
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+            className="text-3xl hover:text-[#14B8A6] transition-all transform hover:scale-125">
+            <FaLinkedin />
+          </a>
+
+          <a href="mailto:ksaivignesh12@gmail.com"
+            className="text-3xl hover:text-[#14B8A6] transition-all transform hover:scale-125">
+            <FaEnvelope />
+          </a>
+
+          <a href="tel:9100680121"
+            className="text-3xl hover:text-[#14B8A6] transition-all transform hover:scale-125">
+            <FaPhoneAlt />
+          </a>
         </div>
       </div>
     </section>
