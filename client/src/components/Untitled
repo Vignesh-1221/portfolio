@@ -23,12 +23,12 @@ const About = () => {
 
           <div className="grid lg:grid-cols-2 gap-12 items-start lg:items-center">
 
-            {/* LEFT COLUMN — ABOUT CONTENT */}
+            {/* LEFT COLUMN */}
             <motion.div
               className="space-y-8"
-              initial={{ opacity: 0, x: -40 }}
+              initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
               <div className="space-y-4">
@@ -47,16 +47,14 @@ const About = () => {
                 <strong className="text-[#5EEAD4]">
                   Machine Learning, Data Analytics, and MERN stack
                 </strong>
-                , focused on building impactful real-world technology solutions.
+                .
               </p>
 
               <div className="bg-[#020617]/80 backdrop-blur-sm rounded-2xl p-6 border border-[#14B8A6]/20 shadow-lg">
                 <p className="text-base sm:text-lg text-[#94A3B8]">
-                  I primarily work with{" "}
-                  <strong className="text-[#E5E7EB]">Python</strong> and{" "}
-                  <strong className="text-[#E5E7EB]">JavaScript</strong>. My
-                  experience includes{" "}
-                  <strong className="text-[#5EEAD4]">
+                  I primarily work with <strong>Python</strong> and{" "}
+                  <strong>JavaScript</strong>. My experience includes{" "}
+                  <strong>
                     TensorFlow, REST APIs, data-driven model development, and
                     scalable web systems
                   </strong>
@@ -65,63 +63,55 @@ const About = () => {
               </div>
 
               <p className="text-base sm:text-lg text-[#94A3B8]">
-                My projects include{" "}
-                <strong className="text-[#E5E7EB]">NephroFind</strong>, an{" "}
-                <strong className="text-[#E5E7EB]">
-                  Air Quality Management System
-                </strong>
-                , and an{" "}
-                <strong className="text-[#E5E7EB]">
-                  Agentic Context-Aware Optimizer
-                </strong>
-                .
+                My projects include <strong>NephroFind</strong>, an{" "}
+                <strong>Air Quality Management System</strong>, and an{" "}
+                <strong>Agentic Context-Aware Optimizer</strong>.
               </p>
             </motion.div>
 
             {/* RIGHT COLUMN — ACHIEVEMENTS */}
             <motion.div
               className="space-y-8"
-              initial={{ opacity: 0, x: 40 }}
+              initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7 }}
+              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="bg-[#020617]/70 border border-[#14B8A6]/15 backdrop-blur-xl rounded-3xl p-6 lg:p-7 shadow-xl">
-                <h3 className="text-lg sm:text-xl font-bold mb-5 flex items-center text-[#E5E7EB]">
-                  <span className="w-2.5 h-2.5 bg-[#14B8A6] rounded-full mr-3"></span>
+              <div className="bg-gradient-to-br from-[#14B8A6] to-[#5EEAD4] rounded-3xl p-6 lg:p-7 text-[#020617] shadow-2xl">
+                <h3 className="text-lg sm:text-xl font-bold mb-5 flex items-center">
+                  <span className="w-2.5 h-2.5 bg-yellow-400 rounded-full mr-3"></span>
                   Achievements
                 </h3>
 
                 <div className="space-y-4">
                   <AchievementCard
-                    title="Microsoft Odyssey Challenge 2024"
-                    subtitle="Completed challenge by Microsoft"
+                    title="🏅 Microsoft Odyssey Challenge 2024"
+                    subtitle="Completed Microsoft Odyssey Challenge"
                     proofLink="/microsoft.pdf"
                   />
 
                   <AchievementCard
-                    title="National Level VJ Hackathon"
-                    subtitle="Top 10 out of 1000+ teams nationwide"
+                    title="🥇 National Level VJ Hackathon"
+                    subtitle="Top 10 • 30 finalists • 1000+ teams"
                     proofLink="/hackathon.png"
                   />
 
                   <AchievementCard
-                    title="ISRO Internship"
-                    subtitle="Selected for internship at SDSC SHAR"
+                    title="🚀 ISRO Internship"
+                    subtitle="Selected for ISRO internship"
                     proofLink="/internship.png"
                   />
 
                   <AchievementCard
-                    title="Institutional Recognition"
-                    subtitle="Felicitation for achievements"
+                    title="🎓 Institutional Recognition"
+                    subtitle="Felicitation for ISRO internship"
                     proofLink="/isro-felicitation-mail.png"
                   />
                 </div>
               </div>
 
-              {/* Continuous Learning */}
-              <div className="bg-[#020617]/80 backdrop-blur-sm rounded-3xl p-6 border border-[#14B8A6]/20 shadow-lg">
-                <h3 className="text-lg sm:text-xl font-bold mb-3 text-[#E5E7EB]">
+              <div className="bg-[#020617]/80 backdrop-blur-sm rounded-3xl p-7 border border-[#14B8A6]/20 shadow-xl">
+                <h3 className="text-lg sm:text-xl font-bold mb-4">
                   Continuous Learning
                 </h3>
                 <p className="text-[#94A3B8] italic">
