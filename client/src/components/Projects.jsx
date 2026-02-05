@@ -45,8 +45,8 @@ const staticProjects = [
     image: aqmImg,
     description:
       'IoT-based predictive air purification system using LSTM models for semi-closed environments.',
-    techStack: ['ESP32', 'IoT', 'LSTM'],
-    projectLink: 'https://github.com/Vignesh-1221',
+    techStack: ['ML', 'Python', 'Audrino'],
+    projectLink: 'https://github.com/Vignesh-1221/air_quality_management__ML.git',
   },
   {
     title: 'AURA',
