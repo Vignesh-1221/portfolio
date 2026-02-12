@@ -17,8 +17,8 @@ const Navbar = ({ isCliMode, toggleMode }) => {
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = process.env.PUBLIC_URL + '/Vignesh_resume.pdf';
-    link.download = 'Sai_Vignesh_Kalivarapu_Resume.pdf';
+    link.href = process.env.PUBLIC_URL + '/Vignesh_Resume.pdf';
+    link.download = 'Vignesh_Resume.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
