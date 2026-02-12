@@ -15,16 +15,6 @@ const Navbar = ({ isCliMode, toggleMode }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = process.env.PUBLIC_URL + '/Vignesh_Resume.pdf';
-    link.download = 'Vignesh_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-  
-
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -34,10 +24,9 @@ const Navbar = ({ isCliMode, toggleMode }) => {
         scrolled ? 'shadow-lg border-[#14B8A6]/15' : 'border-transparent'
       }`}
     >
-      {/* Blur background (visual only, no layout impact) */}
+      {/* Blur background */}
       <div className="navbar-bg" aria-hidden />
 
-      {/* Fixed-height content wrapper */}
       <div className="navbar-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="navbar-row flex items-center justify-between">
 
@@ -62,30 +51,37 @@ const Navbar = ({ isCliMode, toggleMode }) => {
                 offset={-64}
                 spy
                 activeClass="nav-active"
-                className="nav-link relative text-base font-medium text-[#94A3B8] hover:text-[#E5E7EB] cursor-pointer whitespace-nowrap leading-none"
+                className="relative text-base font-medium text-[#94A3B8] hover:text-[#E5E7EB] cursor-pointer whitespace-nowrap leading-none"
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
-                <span className="absolute left-0 -bottom-1 h-0.5 w-0 bg-gradient-to-r from-[#14B8A6] to-[#5EEAD4] transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </div>
 
           {/* Right Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={handleDownload}
-              className="bg-[#14B8A6] hover:bg-[#5EEAD4] text-[#020617] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg leading-none"
+
+            {/* ✅ Resume Download (FINAL FIX) */}
+            <a
+              href="/Vignesh_Resume.pdf"
+              download="Sai_Vignesh_Kalivarapu_Resume.pdf"
+              className="bg-[#14B8A6] hover:bg-[#5EEAD4] text-[#020617] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg leading-none transition"
             >
               <Download className="w-4 h-4" />
               Resume
-            </button>
+            </a>
 
+            {/* CLI Toggle */}
             <button
               onClick={toggleMode}
-              className="bg-[#111827] hover:bg-[#020617] text-[#E5E7EB] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg leading-none"
+              className="bg-[#111827] hover:bg-[#020617] text-[#E5E7EB] px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg leading-none transition"
               title={isCliMode ? 'Switch to GUI Mode' : 'Switch to CLI Mode'}
             >
-              {isCliMode ? <Monitor className="w-4 h-4" /> : <Terminal className="w-4 h-4" />}
+              {isCliMode ? (
+                <Monitor className="w-4 h-4" />
+              ) : (
+                <Terminal className="w-4 h-4" />
+              )}
               {isCliMode ? 'GUI' : 'CLI'}
             </button>
           </div>
@@ -130,7 +126,6 @@ const Navbar = ({ isCliMode, toggleMode }) => {
         )}
       </AnimatePresence>
 
-      {/* Component styles */}
       <style jsx>{`
         .navbar {
           --nav-h: 64px;
