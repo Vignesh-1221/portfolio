@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const experiences = [
   {
     role: "Intern (On-site)",
     company: "ISRO SHAR (SDSC Sriharikota)",
     duration: "May 2025 - June 2025",
-    projectTitle:
-      "Project: Design of Informative Web Portal for Third Launch Pad Project",
-    description:
-      "Worked on developing an internal web-based portal to manage, visualize, and track project-related data to support planning and operational workflows.",
+    projectTitle: "Project: Design of Informative Web Portal for Third Launch Pad Project",
+    description: "Worked on developing an internal web-based portal to manage, visualize, and track project-related data to support planning and operational workflows.",
     points: [
       "Designed and developed an internal web portal that improved visibility of 15+ project milestones and streamlined documentation and financial tracking workflows.",
       "Built responsive UI components using JSP, Bootstrap, and jQuery for structured and user-friendly data presentation.",
@@ -22,8 +20,7 @@ const experiences = [
     company: "Edunet Foundation (AICTE)",
     duration: "August 2025 - September 2025",
     projectTitle: "Project: CSE Interview Quiz Web Application",
-    description:
-      "Developed a web-based quiz application focused on Computer Science interview preparation as part of an AICTE–Edunet Foundation internship.",
+    description: "Developed a web-based quiz application focused on Computer Science interview preparation as part of an AICTE–Edunet Foundation internship.",
     points: [
       "Built an interactive quiz platform with multiple-choice questions and score evaluation logic.",
       "Designed responsive and user-friendly interfaces using HTML, CSS, and JavaScript.",
@@ -34,61 +31,107 @@ const experiences = [
   },
 ];
 
+const highlightMetric = (text) => {
+  const patterns = [
+    { regex: /(\d+%|[0-9]+\+)/g, cls: "metric-highlight" },
+  ];
+  let result = text;
+  for (const { regex, cls } of patterns) {
+    result = result.replace(regex, (m) => `<span class="${cls}">${m}</span>`);
+  }
+  return result;
+};
+
 const Experience = () => {
+  const [lineHeight, setLineHeight] = useState(0);
+
+  useEffect(() => {
+    const section = document.getElementById("experience");
+    const line = document.getElementById("timeline-line");
+    const update = () => {
+      if (!section || !line) return;
+      const rect = section.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      const start = rect.top - viewportH * 0.5;
+      const end = rect.bottom;
+      const total = end - start;
+      if (total <= 0 || rect.top > viewportH) {
+        setLineHeight(0);
+        return;
+      }
+      const progress = Math.min(1, Math.max(0, (viewportH * 0.6 - rect.top) / total));
+      setLineHeight(progress);
+    };
+    window.addEventListener("scroll", update);
+    update();
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
   return (
     <section
       id="experience"
-      className="bg-[#020617] text-[#E5E7EB] py-16 px-6 md:px-16"
+      className="text-[#f0ede8] px-6 md:px-16"
     >
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center text-[#14B8A6]">
+        <p className="text-xs font-['JetBrains_Mono'] text-[#00d4ff] tracking-[0.15em] uppercase text-center mb-1">
+          // 03
+        </p>
+        <h2 className="experience-heading text-3xl md:text-4xl mb-2 text-center">
           Experience
         </h2>
-        <p className="text-center text-[#94A3B8] mb-10">
-          {/* visual-only spacing helper, no text changes */}
-        </p>
+        <p className="text-center text-[#94A3B8] mb-4">&nbsp;</p>
 
         <div className="relative mt-6">
-          {/* Vertical timeline line */}
-          <div className="hidden md:block absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-[#14B8A6] via-[#5EEAD4]/60 to-transparent" />
+          <div
+            id="timeline-line"
+            className="hidden md:block timeline-line"
+            style={{ height: "100%" }}
+          >
+            <div
+              className="w-full bg-[rgba(0,212,255,0.8)] transition-all duration-500 ease-out"
+              style={{ height: `${lineHeight * 100}%` }}
+            />
+          </div>
 
           <div className="space-y-10">
             {experiences.map((exp, index) => (
               <div key={index} className="relative md:pl-16">
-                {/* Timeline dot */}
-                <div className="hidden md:flex absolute left-7 top-5 -translate-x-1/2 items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-[#14B8A6] shadow-[0_0_0_4px_rgba(20,184,166,0.25)]" />
+              <div className="hidden md:flex timeline-dot-outer shadow-[0_0_16px_rgba(0,212,255,0.35)]">
+                  <div className="timeline-dot-inner" />
                 </div>
 
-                <div className="group rounded-2xl bg-[#020617]/80 backdrop-blur-xl border border-[#14B8A6]/15 hover:border-[#5EEAD4]/40 shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5">
+                <div className="group experience-card backdrop-blur-xl">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6 p-6 md:p-7">
                     <div className="flex-1 space-y-1.5">
-                      <h3 className="text-xl font-semibold text-[#E5E7EB]">
-                        {exp.role}
-                      </h3>
-                      <p className="text-sm text-[#94A3B8]">
-                        {exp.company}
-                      </p>
+                      <div className="flex items-center gap-3">
+                        <div className="experience-company-badge flex items-center justify-center">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-[#f0ede8]">{exp.role}</h3>
+                          <p className="text-sm text-[#94A3B8]">{exp.company}</p>
+                        </div>
+                      </div>
 
-                      {/* Date pill */}
                       <div className="inline-flex items-center mt-2">
-                        <span className="inline-flex items-center rounded-full border border-[#14B8A6]/40 bg-[#020617]/80 px-3 py-1 text-xs font-medium text-[#5EEAD4]">
+                        <span className="inline-flex items-center experience-date-badge px-3 py-1">
                           {exp.duration}
                         </span>
                       </div>
 
-                      <p className="mt-3 font-medium text-[#E5E7EB]">
-                        {exp.projectTitle}
-                      </p>
-                      <p className="mt-2 text-sm md:text-base text-[#E5E7EB]">
+                      <p className="mt-3 font-medium text-[#f0ede8]">{exp.projectTitle}</p>
+                      <p className="mt-2 text-sm md:text-base text-[#94A3B8]">
                         {exp.description}
                       </p>
                     </div>
 
-                    <div className="md:w-1/2">
-                      <ul className="list-disc list-inside space-y-1.5 text-sm text-[#94A3B8]">
+                    <div className="md:w-[48%]">
+                      <ul className="space-y-2 text-sm text-[#94A3B8]">
                         {exp.points.map((point, idx) => (
-                          <li key={idx}>{point}</li>
+                          <li key={idx} className="flex gap-2">
+                            <span className="text-[#00d4ff] mt-0.5 shrink-0">→</span>
+                            <span dangerouslySetInnerHTML={{ __html: highlightMetric(point) }} />
+                          </li>
                         ))}
                       </ul>
                     </div>

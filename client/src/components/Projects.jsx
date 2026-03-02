@@ -10,7 +10,6 @@ import bmiImg from '../assets/images/bmi.png';
 import cse_prepImg from '../assets/images/cse_prep.png';
 import { fetchProjects } from '../utils/api';
 
-/* ================= IMAGE MAP (UNCHANGED) ================= */
 const imageMap = {
   '/images/nephrofind.png': nephrofindImg,
   '/images/coptimizer.png': cooptimizerImg,
@@ -22,112 +21,127 @@ const imageMap = {
   '/images/cse_prep.png': cse_prepImg,
 };
 
-/* ================= STATIC PROJECTS (YOUR DATA) ================= */
 const staticProjects = [
   {
     title: 'NephroFind',
     image: nephrofindImg,
-    description:
-      'Platform for early detection and analysis of IgA nephropathy using ML.',
+    description: 'Platform for early detection and analysis of IgA nephropathy using ML.',
     techStack: ['MERN', 'Machine Learning', 'Healthcare AI'],
     projectLink: 'https://github.com/Vignesh-1221/Nephrofind',
+    impact: 'ML-powered early detection for kidney disease screening.',
+    featured: true,
   },
   {
     title: 'Agentic Context-Aware Optimizer',
     image: cooptimizerImg,
-    description:
-      'On-device Android agent using TinyML to autonomously optimize device performance.',
+    description: 'On-device Android agent using TinyML to autonomously optimize device performance.',
     techStack: ['Android', 'TinyML', 'TensorFlow Lite'],
     projectLink: 'https://github.com/Vignesh-1221/coptimizer',
+    impact: 'Autonomous on-device optimization with TinyML.',
+    featured: false,
   },
   {
     title: 'Air Quality Management System',
     image: aqmImg,
-    description:
-      'IoT-based predictive air purification system using LSTM models for semi-closed environments.',
+    description: 'IoT-based predictive air purification system using LSTM models for semi-closed environments.',
     techStack: ['ML', 'Python', 'Audrino'],
     projectLink: 'https://github.com/Vignesh-1221/air_quality_management__ML.git',
+    impact: 'IoT + LSTM predictive air quality for enclosed spaces.',
+    featured: false,
   },
   {
     title: 'AURA',
     image: auraImg,
-    description:
-      'Web-based system to assist underwriting decisions through data-driven risk evaluation.',
+    description: 'Web-based system to assist underwriting decisions through data-driven risk evaluation.',
     techStack: ['HTML', 'JavaScript', 'Risk Analysis'],
-    projectLink:
-      'https://github.com/Vignesh-1221/AURA-Automated-Underwriting-Risk-Assessment',
+    projectLink: 'https://github.com/Vignesh-1221/AURA-Automated-Underwriting-Risk-Assessment',
+    impact: 'Data-driven underwriting risk assessment.',
+    featured: false,
   },
   {
     title: 'Random Quotes App',
     image: gitCloneImg,
-    description:
-      'Lightweight JavaScript application that fetches and displays dynamic quotes via APIs.',
+    description: 'Lightweight JavaScript application that fetches and displays dynamic quotes via APIs.',
     techStack: ['JavaScript', 'API'],
     projectLink: 'https://github.com/Vignesh-1221/random_quotes',
+    impact: 'API-driven dynamic quote display.',
+    featured: false,
   },
   {
     title: 'ML Mini Project',
     image: recoveryImg,
-    description:
-      'Exploratory machine learning project focused on data analysis and prediction.',
+    description: 'Exploratory machine learning project focused on data analysis and prediction.',
     techStack: ['Python', 'Scikit-learn'],
     projectLink: 'https://github.com/Vignesh-1221',
+    impact: 'Exploratory ML for data analysis.',
+    featured: false,
   },
   {
     title: 'Backend REST API',
     image: bmiImg,
-    description:
-      'Node.js and Express-based REST API implementing CRUD operations with MongoDB.',
+    description: 'Node.js and Express-based REST API implementing CRUD operations with MongoDB.',
     techStack: ['Node.js', 'Express', 'MongoDB'],
     projectLink: 'https://github.com/Vignesh-1221',
+    impact: 'REST API with CRUD and MongoDB.',
+    featured: false,
   },
   {
     title: 'CSE Interview Quiz',
     image: cse_prepImg,
-    description:
-      'Web-based quiz application for CS interview preparation.',
+    description: 'Web-based quiz application for CS interview preparation.',
     techStack: ['HTML', 'CSS', 'JavaScript'],
     projectLink: 'https://github.com/Vignesh-1221/cse_interview-quiz',
+    impact: 'CS interview prep quiz platform.',
+    featured: false,
   },
 ];
 
 const Projects = () => {
-  /* Initialize with static data so UI renders immediately */
   const [projects, setProjects] = useState(staticProjects);
 
   useEffect(() => {
     const loadProjects = async () => {
       const data = await fetchProjects();
       if (data && Array.isArray(data) && data.length > 0) {
-        const mappedProjects = data.map((project) => ({
-          ...project,
-          image: imageMap[project.image] || project.image,
-        }));
-        setProjects(mappedProjects);
+        const mapped = data.map((p) => {
+          const existing = staticProjects.find((s) => s.title === p.title);
+          return {
+            ...existing,
+            ...p,
+            image: imageMap[p.image] || p.image,
+            featured: p.title === 'NephroFind',
+            impact: existing?.impact || p.description?.slice(0, 50) + '...',
+          };
+        });
+        setProjects(mapped);
       }
     };
     loadProjects();
   }, []);
 
   return (
-    <section id="projects" className="min-h-screen px-6 py-16 bg-[#0F172A] text-[#E5E7EB]">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-[#14B8A6] mb-8">My Projects</h2>
+    <section id="projects" className="min-h-screen px-6 text-[#f0ede8]">
+      <div className="max-w-6xl mx-auto">
+        <p className="text-xs font-['JetBrains_Mono'] text-[#00d4ff] tracking-[0.15em] uppercase text-center mb-1">
+          // 04
+        </p>
+        <h2 className="projects-heading text-4xl text-center mb-8">
+          My Projects
+        </h2>
 
-        <div className="group/projects grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <div
+            <ProjectCard
               key={index}
-              className="transition-opacity duration-300 group-hover/projects:opacity-60 hover:opacity-100"
-            >
-              <ProjectCard
-                title={project.title}
-                image={project.image}
-                description={project.description}
-                techStack={project.techStack}
-                projectLink={project.projectLink}
-              />
-            </div>
+              title={project.title}
+              image={project.image}
+              description={project.description}
+              techStack={project.techStack}
+              projectLink={project.projectLink}
+              gitlabLink={project.gitlabLink}
+              impact={project.impact}
+              featured={project.featured}
+            />
           ))}
         </div>
       </div>

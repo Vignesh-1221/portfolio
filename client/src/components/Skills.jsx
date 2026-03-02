@@ -462,77 +462,28 @@ const skillImageMap = {
   '/skills/postman.png': postmanIcon,
 };
 
-// Original static categories data (fallback)
 const staticCategories = [
-  {
-    title: "Languages",
-    icon: "💻",
-    color: "bg-[#14B8A6]/20",
-    skills: [
-      { icon: pythonIcon, name: "Python" },
-      { icon: javaIcon, name: "Java" },
-      { icon: cIcon, name: "C" }
-    ]
-  },
-  {
-    title: "Web Dev",
-    icon: "🌐",
-    color: "bg-[#14B8A6]/20",
-    skills: [
-      { icon: reactIcon, name: "React" },
-      { icon: nodeIcon, name: "Node.js" },
-      { icon: expressIcon, name: "Express" },
-      { icon: htmlIcon, name: "HTML" },
-      { icon: cssIcon, name: "CSS" },
-      { icon: tailwindIcon, name: "TailwindCSS" }
-    ]
-  },
-  {
-    title: "Databases",
-    icon: "🗄️",
-    color: "bg-[#14B8A6]/20",
-    skills: [
-      { icon: postgresIcon, name: "PostgreSQL" },
-      { icon: mongoseIcon, name: "MongoDB" }
-    ]
-  },
-  {
-    title: "ML/AI",
-    icon: "🤖",
-    color: "bg-[#14B8A6]/20",
-    skills: [
-      { icon: pythonIcon, name: "Python" },
-      { icon: numpyIcon, name: "NumPy" },
-      { icon: pandasIcon, name: "Pandas" },
-      { icon: sciIcon, name: "Scikit-learn" },
-      { icon: tensIcon, name: "TensorFlow" }
-    ]
-  },
-  {
-    title: "Tools",
-    icon: "🛠️",
-    color: "bg-[#14B8A6]/20",
-    skills: [
-      { icon: gitIcon, name: "Git" },
-      { icon: postmanIcon, name: "Postman" }
-    ]
-  }
+  { title: "Languages", icon: "💻", gradient: "from-amber-500/15 to-orange-600/10", gridSpan: "md:col-span-1", skills: [{ icon: pythonIcon, name: "Python" }, { icon: javaIcon, name: "Java" }, { icon: cIcon, name: "C" }] },
+  { title: "Web Dev", icon: "🌐", gradient: "from-orange-400/15 to-amber-600/10", gridSpan: "md:col-span-2", skills: [{ icon: reactIcon, name: "React" }, { icon: nodeIcon, name: "Node.js" }, { icon: expressIcon, name: "Express" }, { icon: htmlIcon, name: "HTML" }, { icon: cssIcon, name: "CSS" }, { icon: tailwindIcon, name: "TailwindCSS" }] },
+  { title: "Databases", icon: "🗄️", gradient: "from-amber-600/15 to-rose-500/10", gridSpan: "md:col-span-1", skills: [{ icon: postgresIcon, name: "PostgreSQL" }, { icon: mongoseIcon, name: "MongoDB" }] },
+  { title: "ML/AI", icon: "🤖", gradient: "from-rose-500/15 to-amber-500/10", gridSpan: "md:col-span-2", skills: [{ icon: pythonIcon, name: "Python" }, { icon: numpyIcon, name: "NumPy" }, { icon: pandasIcon, name: "Pandas" }, { icon: sciIcon, name: "Scikit-learn" }, { icon: tensIcon, name: "TensorFlow" }] },
+  { title: "Tools", icon: "🛠️", gradient: "from-orange-600/15 to-amber-400/10", gridSpan: "md:col-span-1", skills: [{ icon: gitIcon, name: "Git" }, { icon: postmanIcon, name: "Postman" }] }
 ];
 
 const SkillCard = ({ icon, name }) => (
-  <div className="hover:scale-105 transition duration-200 p-3 bg-[#020617] rounded-lg shadow-sm flex flex-col items-center">
+  <div className="skills-icon-cell">
     <img src={icon} alt={name} className="h-8 w-8 mb-2" />
-    <p className="text-[#E5E7EB] text-sm font-medium text-center">{name}</p>
+    <p className="text-[#f0ede8] text-sm font-medium text-center">{name}</p>
   </div>
 );
 
-const CategoryCard = ({ title, skills, icon, color }) => (
-  <div className="bg-[#020617] rounded-2xl p-6 shadow-lg border border-[#14B8A6]/15 hover:border-[#14B8A6]/40 transition duration-300">
-    <div className="flex items-center mb-4">
-      <div className={`p-2 rounded-lg ${color} mr-3`}>
+const CategoryCard = ({ title, skills, icon, gradient, gridSpan }) => (
+  <div className={`${gridSpan} skills-category-card group`}>
+    <div className="skills-category-header">
+      <div className="skills-category-icon">
         <span className="text-xl">{icon}</span>
       </div>
-      <h3 className="text-xl font-bold text-[#E5E7EB]">{title}</h3>
+      <h3 className="skills-category-title text-[#f0ede8]">{title}</h3>
     </div>
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
       {skills.map((skill, index) => (
@@ -550,19 +501,14 @@ const Skills = () => {
   useEffect(() => {
     const loadSkills = async () => {
       const data = await fetchSkills();
-      // Only update if API returns valid data (not null and has categories)
       if (data && data.categories && Array.isArray(data.categories) && data.categories.length > 0) {
-        // Map API image paths to imported images
-        const mappedCategories = data.categories.map(category => ({
-          ...category,
-          skills: category.skills.map(skill => ({
-            ...skill,
-            icon: skillImageMap[skill.icon] || skill.icon
-          }))
+        const mapped = data.categories.map(cat => ({
+          ...staticCategories.find(s => s.title === cat.title) || cat,
+          ...cat,
+          skills: (cat.skills || []).map(s => ({ ...s, icon: skillImageMap[s.icon] || s.icon }))
         }));
-        setCategories(mappedCategories);
+        setCategories(mapped);
       }
-      // If API fails or returns null/empty, keep static data (already set)
     };
     loadSkills();
   }, []);
@@ -572,60 +518,49 @@ const Skills = () => {
     return [...acc, ...category.skills];
   }, []) : [];
 
-  // Filter categories or show all skills based on active tab
-  const getDisplayContent = () => {
-    if (activeTab === "All Skills") {
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categories.map((category, index) => (
-            <CategoryCard
-              key={index}
-              title={category.title}
-              skills={category.skills}
-              icon={category.icon}
-              color={category.color}
-            />
-          ))}
-        </div>
-      );
-    } else {
-      const filteredCategories = categories.filter(category => category.title === activeTab);
-      return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCategories.map((category, index) => (
-            <CategoryCard
-              key={index}
-              title={category.title}
-              skills={category.skills}
-              icon={category.icon}
-              color={category.color}
-            />
-          ))}
-        </div>
-      );
-    }
-  };
+  const displayCategories = activeTab === "All Skills"
+    ? categories
+    : categories.filter(c => c.title === activeTab);
+  const gridSpan = (cat) => cat.gridSpan || "md:col-span-1";
+  const gradient = (cat) => cat.gradient || "from-amber-500/15 to-orange-600/10";
+
+  const getDisplayContent = () => (
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {displayCategories.map((category, index) => (
+        <CategoryCard
+          key={index}
+          title={category.title}
+          skills={category.skills}
+          icon={category.icon}
+          gradient={gradient(category)}
+          gridSpan={gridSpan(category)}
+        />
+      ))}
+    </div>
+  );
 
   const tabNames = ["All Skills", "Languages", "Web Dev", "Databases", "ML/AI", "Tools"];
 
   return (
-    <section id="skills" className="bg-[#0F172A] py-12 px-6 md:px-20">
-      <h1 className="text-3xl md:text-4xl font-bold text-center text-[#14B8A6] mb-6">
+    <section id="skills" className="skills-section px-6 md:px-20">
+      <p className="text-xs font-['JetBrains_Mono'] text-[#00d4ff] tracking-[0.15em] uppercase text-center mb-1">
+        // 02
+      </p>
+      <h2 className="skills-heading text-3xl md:text-4xl text-center mb-2">
         Technical Expertise
-      </h1>
+      </h2>
       <p className="text-center text-[#94A3B8] mb-10">
         Comprehensive skill set spanning multiple technologies and domains
       </p>
 
-      {/* Filter Tabs */}
-      <div className="flex flex-wrap justify-center gap-3 mb-8">
+      <div className="flex flex-wrap justify-center gap-3 mb-10">
         {tabNames.map((tab) => (
           <button
             key={tab}
-            className={`px-5 py-2 rounded-full text-sm font-semibold transition ${
+            className={`skills-filter-button px-5 py-2 font-semibold transition ${
               activeTab === tab
-                ? "bg-[#14B8A6] text-[#020617] shadow-md"
-                : "bg-[#020617] text-[#E5E7EB] hover:bg-[#111827]"
+                ? "skills-filter-button skills-filter-button--active shadow-md"
+                : "skills-filter-button skills-filter-button--inactive"
             }`}
             onClick={() => setActiveTab(tab)}
           >
@@ -634,7 +569,6 @@ const Skills = () => {
         ))}
       </div>
 
-      {/* Dynamic Content */}
       {getDisplayContent()}
     </section>
   );

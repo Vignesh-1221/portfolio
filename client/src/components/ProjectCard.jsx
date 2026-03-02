@@ -1,82 +1,104 @@
-import React from "react";
-import { FaGitlab, FaExternalLinkAlt } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
-const ProjectCard = ({ title, image, description, techStack = [], projectLink, gitlabLink }) => {
+const ProjectCard = ({
+  title,
+  image,
+  description,
+  techStack = [],
+  projectLink,
+  gitlabLink,
+  impact,
+  featured,
+}) => {
+  const [hover, setHover] = useState(false);
+
   return (
-    <div className="group perspective-1000 h-80 transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl">
-      <div className="relative w-full h-full transition-transform duration-700 transform-style-preserve-3d group-hover:rotate-y-180">
-        {/* Front Side */}
-        <div className="absolute inset-0 w-full h-full backface-hidden bg-[#020617] rounded-2xl overflow-hidden shadow-lg border border-[#14B8A6]/15">
+    <div
+      className="group relative project-card"
+      data-project-title={title}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      <div className="project-image-container relative">
+        {image ? (
           <img
             src={image}
             alt={title}
-            className="w-full h-44 object-cover"
+            className="w-full h-full object-cover"
           />
-          <div className="p-5">
-            <h3 className="text-xl font-semibold text-[#E5E7EB] mb-2">{title}</h3>
-            <p className="text-[#94A3B8] text-sm mb-4 line-clamp-3">{description}</p>
-            <div className="flex flex-wrap gap-2">
-              {Array.isArray(techStack) &&
-                techStack.slice(0, 3).map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-[#14B8A6]/10 text-[#5EEAD4] text-xs font-medium px-2.5 py-0.5 rounded"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              {techStack.length > 3 && (
-                <span className="text-[#94A3B8] text-xs">+{techStack.length - 3} more</span>
-              )}
-            </div>
+        ) : (
+          <div className="project-placeholder">
+            <span className="project-placeholder-text">
+              {Array.isArray(techStack) && techStack.length > 0 ? techStack[0] : 'MERN'}
+            </span>
           </div>
+        )}
+        {/* Case study overlay on hover */}
+        <div
+          className={`absolute inset-0 bg-[#080c10]/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 transition-opacity duration-300 ${
+            hover ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="flex flex-wrap gap-2 justify-center mb-3">
+            {Array.isArray(techStack) &&
+              techStack.map((tech, idx) => (
+                <span
+                  key={idx}
+                  className="project-tag"
+                >
+                  {tech}
+                </span>
+              ))}
+          </div>
+          {impact && (
+            <p className="text-sm text-[#f0ede8] text-center max-w-xs">
+              {impact}
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="project-body">
+        <h3 className="project-title mb-2">{title}</h3>
+        <p className="project-description mb-4">{description}</p>
+        <div className="flex flex-wrap gap-2">
+          {Array.isArray(techStack) &&
+            techStack.slice(0, 4).map((tech, idx) => (
+              <span
+                key={idx}
+                className="project-tag"
+              >
+                {tech}
+              </span>
+            ))}
+          {techStack.length > 4 && (
+            <span className="text-[#94A3B8] text-xs">+{techStack.length - 4}</span>
+          )}
         </div>
 
-        {/* Back Side */}
-        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-[#020617] to-[#0F172A] rounded-2xl shadow-lg border border-[#14B8A6]/15 flex flex-col items-center justify-center p-6">
-          <div className="text-center">
-            <h3 className="text-2xl font-bold text-[#E5E7EB] mb-4">{title}</h3>
-            <p className="text-[#94A3B8] text-sm mb-6">{description}</p>
-            
-            {/* All Tech Stack */}
-            <div className="flex flex-wrap gap-2 justify-center mb-6">
-              {Array.isArray(techStack) &&
-                techStack.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-[#14B8A6]/10 text-[#5EEAD4] text-xs font-medium px-2.5 py-0.5 rounded"
-                  >
-                    {tech}
-                  </span>
-                ))}
-            </div>
-
-            {/* Links */}
-            <div className="flex flex-col gap-3">
-              {gitlabLink && (
-                <a
-                  href={gitlabLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors duration-300"
-                >
-                  <FaGitlab className="text-lg" />
-                  View on GitLab
-                </a>
-              )}
-              {projectLink && (
-                <a
-                  href={projectLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-[#14B8A6] hover:bg-[#5EEAD4] text-[#020617] px-4 py-2 rounded-lg transition-colors duration-300"
-                >
-                  <FaExternalLinkAlt className="text-lg" />
-                  Live Preview
-                </a>
-              )}
-            </div>
-          </div>
+        <div className="mt-4 flex gap-3">
+          {projectLink && (
+            <a
+              href={projectLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="project-footer-link"
+            >
+              View Project
+              <span>→</span>
+            </a>
+          )}
+            {gitlabLink && (
+              <a
+                href={gitlabLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-[#00d4ff] hover:text-[#e8edf2] transition font-['JetBrains_Mono']"
+              >
+                GitLab
+              </a>
+            )}
         </div>
       </div>
     </div>
