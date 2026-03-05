@@ -55,10 +55,10 @@ const CLI = ({ toggleMode }) => {
     },
     {
       id: 7,
-      title: 'Backend REST API',
-      description: 'Node.js + Express REST API with CRUD operations.',
-      techStack: ['Node.js', 'Express', 'MongoDB'],
-      githubLink: 'https://github.com/Vignesh-1221'
+      title: 'Medical Third Opinion Agent',
+      description: 'LLM-powered healthcare assistant that analyzes uploaded medical reports and generates a contextual third opinion to help patients better understand diagnoses and treatment options.',
+      techStack: ['Python', 'LLM', 'Vector DB', 'LangChain','React.js', 'Node.js', 'Express.js', 'MongoDB'],
+      githubLink: 'https://github.com/Vignesh-1221/ThirdOp'
     },
     {
       id: 8,

@@ -77,12 +77,12 @@ const staticProjects = [
     featured: false,
   },
   {
-    title: 'Backend REST API',
+    title: 'Medical Third Opinion Agent',
     image: bmiImg,
-    description: 'Node.js and Express-based REST API implementing CRUD operations with MongoDB.',
-    techStack: ['Node.js', 'Express', 'MongoDB'],
-    projectLink: 'https://github.com/Vignesh-1221',
-    impact: 'REST API with CRUD and MongoDB.',
+    description: 'LLM-powered healthcare assistant that analyzes uploaded medical reports and generates a contextual third opinion to help patients better understand diagnoses and treatment options.',
+    techStack: ['Python', 'LLM', 'Vector DB', 'LangChain','React.js', 'Node.js', 'Express.js', 'MongoDB'],
+    projectLink: 'https://github.com/Vignesh-1221/ThirdOp',
+    impact: 'Implemented an LLM + retrieval pipeline to interpret medical reports, surface relevant medical knowledge, and provide explainable third-opinion suggestions for patients.',
     featured: false,
   },
   {
